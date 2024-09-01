@@ -800,6 +800,7 @@ GameObject:
   - component: {fileID: 728036215}
   - component: {fileID: 728036214}
   - component: {fileID: 728036213}
+  - component: {fileID: 728036220}
   - component: {fileID: 728036217}
   - component: {fileID: 728036218}
   - component: {fileID: 728036219}
@@ -978,6 +979,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vida: 5
+--- !u!95 &728036220
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728036212}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dc1871f3efca3ec4e892073b6100cd40, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &733257568 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8487354109418256594, guid: fdc90f6acbb27c647b0b973aeea77568, type: 3}
