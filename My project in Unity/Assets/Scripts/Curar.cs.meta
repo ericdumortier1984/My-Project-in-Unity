@@ -1,11 +1,9 @@
 fileFormatVersion: 2
-guid: b6541b131e48442408acc3595286629a
+guid: 538465d7a87f8f646aa24840c5b21537
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - jumpSFX: {instanceID: 0}
-  - collisionSFX: {instanceID: 0}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

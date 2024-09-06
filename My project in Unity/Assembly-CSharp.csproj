@@ -62,6 +62,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Jugador.cs" />
     <Compile Include="Assets\Scripts\Mover.cs" />
+    <Compile Include="Assets\Scripts\Curar.cs" />
+    <Compile Include="Assets\Scripts\MoverEnemigo.cs" />
     <Compile Include="Assets\Scripts\Herir.cs" />
     <Compile Include="Assets\Scripts\Saltar.cs" />
     <Compile Include="Assets\Scripts\FuezaSalto.cs" />
