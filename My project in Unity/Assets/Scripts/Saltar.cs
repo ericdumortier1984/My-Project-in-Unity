@@ -8,6 +8,7 @@ public class Saltar : MonoBehaviour
     // Variables a configurar desde el editor
     [Header("Configuracion")]
     [SerializeField] private float fuerzaSalto = 5f;
+    [SerializeField] private ParticleSystem polvo;
     [SerializeField] private AudioClip jumpSFX;
 
     // Variables de uso interno en el script
@@ -31,7 +32,7 @@ public class Saltar : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && puedoSaltar)
         {
             puedoSaltar = false;
-
+            polvo.Play();
             if (miAudioSource.isPlaying) { return; }
             miAudioSource.PlayOneShot(jumpSFX);
         }
