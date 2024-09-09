@@ -1,45 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System.Collections; // Importa el espacio de nombres para colecciones
+using System.Collections.Generic; // Importa el espacio de nombres para colecciones genéricas
+using UnityEngine; // Importa el espacio de nombres de Unity
 
-public class Jugador : MonoBehaviour
+public class Jugador : MonoBehaviour // Clase que representa al jugador
 {
-    [Header("Configuracion")]
-    [SerializeField] private float vida = 5f;
-    private const float vidaMaxima = 5f; // vida maxima
-
-    public void ModificarVida(float puntos)
+    [Header("Configuracion")] // Encabezado en el inspector para agrupar configuraciones
+    [SerializeField] private float vida = 5f; // Vida actual del jugador, editable en el inspector
+    private const float vidaMaxima = 5f; // Vida máxima del jugador, constante
+    public void ModificarVida(float puntos) // Método para modificar la vida del jugador
     {
-        vida += puntos;
+        vida += puntos; // Modifica la vida actual sumando los puntos
 
-        // Nos aseguramos que la vida no baje de cero
-        if (vida < 0)
+        if (vida < 0) // Nos aseguramos que la vida no baje de cero
         {
-            vida = 0;
-            Debug.Log("Perdiste");
+            vida = 0; // Si la vida es menor que cero, se establece a cero
+            Debug.Log("Perdiste"); // Mensaje de pérdida
         }
 
-        if (vida > vidaMaxima)
+        if (vida > vidaMaxima) // Aseguramos que la vida no exceda la máxima
         {
-            vida = vidaMaxima;
+            vida = vidaMaxima; // Si la vida es mayor que la máxima, se establece a la máxima
         }
 
-        // Nos aseguramos que la vida no pase de cinco
-
-
-        Debug.Log(EstasVivo());
+        Debug.Log(EstasVivo()); // Imprime si el jugador está vivo o no
     }
-
-
-    private bool EstasVivo()
+    private bool EstasVivo() // Método privado que verifica si el jugador está vivo
     {
-        return vida > 0;
+        return vida > 0; // Retorna verdadero si la vida es mayor que cero
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) // Método que se llama cuando el jugador colisiona con otro objeto
     {
-        if (!collision.gameObject.CompareTag("Meta")) { return; }
+        if (!collision.gameObject.CompareTag("Meta")) // Verifica si el objeto colisionado tiene la etiqueta "Meta"
+        { 
+           return; // Si no es la meta, sale del método
+        }  
 
-        Debug.Log("GANASTE");
+        Destroy(collision.gameObject); // Destruye el objeto colisionado (la meta)
+        Debug.Log("GANASTE"); // Mensaje de victoria
     }
 }
