@@ -1,20 +1,39 @@
 using System.Collections; // Importa el espacio de nombres para colecciones
 using System.Collections.Generic; // Importa el espacio de nombres para colecciones genéricas
 using UnityEngine; // Importa el espacio de nombres de Unity
+using UnityEngine.SceneManagement; // Importa el manejo de escenas
 
 public class Jugador : MonoBehaviour // Clase que representa al jugador
 {
+    // -------- Headers ---------------- //
     [Header("Configuracion")] // Encabezado en el inspector para agrupar configuraciones
+
+    // -------- SerializeFields -------- //
     [SerializeField] private float vida = 5f; // Vida actual del jugador, editable en el inspector
+
+    // -------- Variables privadas ----- //
     private const float vidaMaxima = 5f; // Vida máxima del jugador, constante
+    private MenuGameOver menuGameOver; // Referencia al script MenuGameOver
+    private MenuYouWin menuYouWin; // Referencia al script MenuYouWin
+
+    private int metasRecogidas = 0; // Contador de metas recogidas
+    private int totalMetas; // Total de metas en la escena
+
+    private void Start()
+    {
+        menuGameOver = FindObjectOfType<MenuGameOver>(); // Busca el componente MenuGameOver en la escena
+        menuYouWin = FindObjectOfType<MenuYouWin>(); // Busca el componenete MenuYouWin en la escena
+        totalMetas = GameObject.FindGameObjectsWithTag("Meta").Length; // Cuenta el total de metas en la escena
+    }
+
+
     public void ModificarVida(float puntos) // Método para modificar la vida del jugador
     {
         vida += puntos; // Modifica la vida actual sumando los puntos
 
-        if (vida < 0) // Nos aseguramos que la vida no baje de cero
+        if (vida == 0) // Nos aseguramos que la vida no baje de cero
         {
-            vida = 0; // Si la vida es menor que cero, se establece a cero
-            Debug.Log("Perdiste"); // Mensaje de pérdida
+            SceneManager.LoadScene("EscenaGameOver"); // Carga escena de Game Over
         }
 
         if (vida > vidaMaxima) // Aseguramos que la vida no exceda la máxima
@@ -31,11 +50,16 @@ public class Jugador : MonoBehaviour // Clase que representa al jugador
     private void OnTriggerEnter2D(Collider2D collision) // Método que se llama cuando el jugador colisiona con otro objeto
     {
         if (!collision.gameObject.CompareTag("Meta")) // Verifica si el objeto colisionado tiene la etiqueta "Meta"
-        { 
-           return; // Si no es la meta, sale del método
+        {
+            return; // Si no es la meta, sale del método
         }  
 
         Destroy(collision.gameObject); // Destruye el objeto colisionado (la meta)
-        Debug.Log("GANASTE"); // Mensaje de victoria
+        metasRecogidas++; // Incrementa el contador de metas recogidas
+
+        if (metasRecogidas >= totalMetas) // Verifica si se han recogido todas las metas
+        {
+            SceneManager.LoadScene("EscenaYouWin"); // Carga escena de victoria
+        }
     }
 }
