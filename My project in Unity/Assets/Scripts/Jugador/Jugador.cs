@@ -10,11 +10,15 @@ public class Jugador : MonoBehaviour // Clase que representa al jugador
 
     // -------- SerializeFields -------- //
     [SerializeField] private float vida = 5f; // Vida actual del jugador, editable en el inspector
+    [SerializeField] private float TiempoNoControlJugador;
 
     // -------- Variables privadas ----- //
     private const float vidaMaxima = 5f; // Vida máxima del jugador, constante
     private MenuGameOver menuGameOver; // Referencia al script MenuGameOver
     private MenuYouWin menuYouWin; // Referencia al script MenuYouWin
+
+    private Mover movimientoJugador;
+    private Animator animatorJugador;
 
     private int metasRecogidas = 0; // Contador de metas recogidas
     private int totalMetas; // Total de metas en la escena
@@ -24,6 +28,8 @@ public class Jugador : MonoBehaviour // Clase que representa al jugador
         menuGameOver = FindObjectOfType<MenuGameOver>(); // Busca el componente MenuGameOver en la escena
         menuYouWin = FindObjectOfType<MenuYouWin>(); // Busca el componenete MenuYouWin en la escena
         totalMetas = GameObject.FindGameObjectsWithTag("Meta").Length; // Cuenta el total de metas en la escena
+        movimientoJugador = GetComponent<Mover>();
+        animatorJugador = GetComponent<Animator>();
     }
 
 
@@ -31,7 +37,7 @@ public class Jugador : MonoBehaviour // Clase que representa al jugador
     {
         vida += puntos; // Modifica la vida actual sumando los puntos
 
-        if (vida == 0) // Nos aseguramos que la vida no baje de cero
+        if (vida <= 0) // Nos aseguramos que la vida no baje de cero
         {
             SceneManager.LoadScene("EscenaGameOver"); // Carga escena de Game Over
         }
@@ -61,5 +67,30 @@ public class Jugador : MonoBehaviour // Clase que representa al jugador
         {
             SceneManager.LoadScene("EscenaYouWin"); // Carga escena de victoria
         }
+    }
+
+    public void HerirJugador(float puntos, Vector2 posicion)
+    {
+        vida -= puntos;
+        animatorJugador.SetTrigger("Golpe");
+        // Perder control del Jugador
+        StartCoroutine(PerderControlJugador());
+        // Desactivar colision
+        StartCoroutine(DesactivarColisionConEnemigos());
+        movimientoJugador.RebotePorDaño(posicion);
+    }
+
+    private IEnumerator DesactivarColisionConEnemigos()
+    {
+        Physics2D.IgnoreLayerCollision(7, 9, true);
+        yield return new WaitForSeconds(TiempoNoControlJugador);
+        Physics2D.IgnoreLayerCollision(7, 9, false);
+    }
+
+    private IEnumerator PerderControlJugador()
+    {
+        movimientoJugador.sePuedemover = false;
+        yield return new WaitForSeconds(TiempoNoControlJugador);
+        movimientoJugador.sePuedemover = true;
     }
 }

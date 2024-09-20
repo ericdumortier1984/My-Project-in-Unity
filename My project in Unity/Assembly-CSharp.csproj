@@ -60,15 +60,18 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.44f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Jugador.cs" />
-    <Compile Include="Assets\Scripts\MenuYouWin.cs" />
-    <Compile Include="Assets\Scripts\Mover.cs" />
-    <Compile Include="Assets\Scripts\Curar.cs" />
-    <Compile Include="Assets\Scripts\MenuGameOver.cs" />
-    <Compile Include="Assets\Scripts\MoverEnemigo.cs" />
-    <Compile Include="Assets\Scripts\Herir.cs" />
-    <Compile Include="Assets\Scripts\Saltar.cs" />
-    <Compile Include="Assets\Scripts\FuezaSalto.cs" />
+    <Compile Include="Assets\Scripts\Jugador\Saltar.cs" />
+    <Compile Include="Assets\Scripts\Jugador\Mover.cs" />
+    <Compile Include="Assets\Scripts\Enemigo\Herir.cs" />
+    <Compile Include="Assets\Scripts\Jugador\Jugador.cs" />
+    <Compile Include="Assets\Scripts\Enemigo\MoverEnemigo.cs" />
+    <Compile Include="Assets\Scripts\GUI\MenuGameOver.cs" />
+    <Compile Include="Assets\Scripts\Spawners\GeneradorObjetoAleatorio.cs" />
+    <Compile Include="Assets\Scripts\Enemigo\FuezaSalto.cs" />
+    <Compile Include="Assets\Scripts\Spawners\GeneradorDiaNoche.cs" />
+    <Compile Include="Assets\Scripts\Enemigo\MoverBala.cs" />
+    <Compile Include="Assets\Scripts\Jugador\Curar.cs" />
+    <Compile Include="Assets\Scripts\GUI\MenuYouWin.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

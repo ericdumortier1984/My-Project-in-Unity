@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class MovimientoEnemigo : MonoBehaviour
 {
     public float velocidad = 2f;
     public float distancia = 3f;
