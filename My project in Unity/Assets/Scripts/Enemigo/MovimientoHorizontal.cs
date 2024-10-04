@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovimientoEnemigo : MonoBehaviour
+public class MovimientoHorizontal : MonoBehaviour
 {
-    public float velocidad = 2f;
-    public float distancia = 3f;
+	
+	public float velocidad = 2f;
+	public float distancia = 3f;
 
     private Vector2 posicionInicial;
     private bool derecha = true;

@@ -4,13 +4,11 @@ using UnityEngine; // Importa el espacio de nombres de Unity para acceder a sus 
 
 public class Mover : MonoBehaviour // Define una clase llamada Mover que hereda de MonoBehaviour.
 {
-    // Variables a configurar desde el editor
-    [Header("Configuracion")]  // Añade un encabezado en el editor para agrupar configuraciones.
-    [SerializeField] float velocidad = 5f; // Velocidad de movimiento del objeto, editable desde el inspector.
+    
     [SerializeField] private Vector2 velocidadRebotePorDaño; // Velocidad de rebote al recibir daño, editable desde el inspector.
 
-    // Variables de uso interno en el script
-    private float moverHorizontal; // Almacena la entrada horizontal del jugador.
+	// Variables de uso interno en el script
+	private float moverHorizontal; // Almacena la entrada horizontal del jugador.
     private Vector2 direccion; // Almacena la dirección de movimiento.
 
     // Variable para referenciar otro componente del objeto
@@ -18,8 +16,9 @@ public class Mover : MonoBehaviour // Define una clase llamada Mover que hereda 
     private Animator miAnimator; // Referencia al componente Animator del objeto.
     private SpriteRenderer miSprite; // Referencia al componente SpriteRenderer del objeto.
     private CircleCollider2D miCollider2D; // Referencia al componente CircleCollider2D del objeto.
+    private Jugador jugador; // Referencia al Script Jugador
 
-    private int saltarMask; // Máscara de capas para detectar colisiones con plataformas.
+	private int saltarMask; // Máscara de capas para detectar colisiones con plataformas.
 
     public bool sePuedemover; // Bandera que indica si el objeto puede moverse.
 
@@ -31,7 +30,8 @@ public class Mover : MonoBehaviour // Define una clase llamada Mover que hereda 
         miAnimator = GetComponent<Animator>(); // Obtiene el componente Animator.
         miSprite = GetComponent<SpriteRenderer>(); // Obtiene el componente SpriteRenderer.
         miCollider2D = GetComponent<CircleCollider2D>(); // Obtiene el componente CircleCollider2D.
-        saltarMask = LayerMask.GetMask("Pisos", "Plataformas"); // Crea una máscara de capas para detectar "Pisos" y "Plataformas".
+		jugador = GetComponent<Jugador>();
+		saltarMask = LayerMask.GetMask("Pisos", "Plataformas"); // Crea una máscara de capas para detectar "Pisos" y "Plataformas".
     }
 
     // Codigo ejecutado en cada frame del juego (Intervalo variable)
@@ -50,7 +50,7 @@ public class Mover : MonoBehaviour // Define una clase llamada Mover que hereda 
     {
         if (sePuedemover) // Verifica si el objeto puede moverse.
         {
-            miRigidbody2D.AddForce(direccion * velocidad); // Aplica una fuerza al Rigidbody2D en la dirección deseada.
+            miRigidbody2D.AddForce(direccion * jugador.PerfilJugador.Velocidad); // Aplica una fuerza al Rigidbody2D en la dirección deseada.
         }
     }
     private bool EnContactoConPlataforma() // Método que verifica si el objeto está en contacto con plataformas.

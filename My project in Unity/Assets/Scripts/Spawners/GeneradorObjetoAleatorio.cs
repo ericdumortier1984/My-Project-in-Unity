@@ -23,13 +23,11 @@ public class GeneradorObjetoAleatorio : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        Debug.Log("El SpriteRenderer deja de ser visible por las cámaras en la escena");
         CancelInvoke(nameof(GenerarObjetoAleatorio));
     }
 
     private void OnBecameVisible()
     {
-        Debug.Log("El SpriteRenderer es visible por las cámaras en la escena");
         InvokeRepeating(nameof(GenerarObjetoAleatorio), tiempoEspera, tiempoIntervalo);
     }
 }

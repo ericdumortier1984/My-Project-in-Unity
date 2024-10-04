@@ -1,77 +1,78 @@
-using System.Collections; // Importa el espacio de nombres para colecciones
-using System.Collections.Generic; // Importa el espacio de nombres para colecciones genéricas
-using UnityEngine; // Importa el espacio de nombres de Unity
-using UnityEngine.SceneManagement; // Importa el manejo de escenas
-
-public class Jugador : MonoBehaviour // Clase que representa al jugador
+using System.Collections; 
+using System.Collections.Generic; 
+using UnityEngine;
+using UnityEngine.SceneManagement; 
+public class Jugador : MonoBehaviour 
 {
-    // -------- Headers ---------------- //
-    [Header("Configuracion")] // Encabezado en el inspector para agrupar configuraciones
+	[SerializeField] 
+	private PerfilJugador perfilJugador;
+	public PerfilJugador PerfilJugador { get => perfilJugador; }
 
-    // -------- SerializeFields -------- //
-    [SerializeField] private float vida = 5f; // Vida actual del jugador, editable en el inspector
-    [SerializeField] private float TiempoNoControlJugador;
-
-    // -------- Variables privadas ----- //
-    private const float vidaMaxima = 5f; // Vida máxima del jugador, constante
-    private MenuGameOver menuGameOver; // Referencia al script MenuGameOver
-    private MenuYouWin menuYouWin; // Referencia al script MenuYouWin
-
+	// -------- Referencias a scripts ----- //
+    private MenuGameOver menuGameOver; 
+    private MenuYouWin menuYouWin;
     private Mover movimientoJugador;
     private Animator animatorJugador;
+	private AudioSource miAudioSource;
+    private Progresion progresionJugador;
+    private Coleccionables coleccionables;
 
-    private int metasRecogidas = 0; // Contador de metas recogidas
-    private int totalMetas; // Total de metas en la escena
-
-    private void Start()
+	private void Start()
     {
-        menuGameOver = FindObjectOfType<MenuGameOver>(); // Busca el componente MenuGameOver en la escena
-        menuYouWin = FindObjectOfType<MenuYouWin>(); // Busca el componenete MenuYouWin en la escena
-        totalMetas = GameObject.FindGameObjectsWithTag("Meta").Length; // Cuenta el total de metas en la escena
-        movimientoJugador = GetComponent<Mover>();
+        menuGameOver = FindObjectOfType<MenuGameOver>(); 
+        menuYouWin = FindObjectOfType<MenuYouWin>();
+        coleccionables = FindObjectOfType<Coleccionables>();
+		movimientoJugador = GetComponent<Mover>();
         animatorJugador = GetComponent<Animator>();
-    }
+		miAudioSource = GetComponent<AudioSource>();
+        progresionJugador = GetComponent<Progresion>();
+	}
 
+	private void Update()
+	{
+		Debug.Log(PerfilJugador.Nivel);
+	}
 
-    public void ModificarVida(float puntos) // Método para modificar la vida del jugador
+	public void ModificarVida(int puntos) 
     {
-        vida += puntos; // Modifica la vida actual sumando los puntos
+        PerfilJugador.Vida += puntos; 
 
-        if (vida <= 0) // Nos aseguramos que la vida no baje de cero
+        if (PerfilJugador.Vida <= 0) 
         {
-            SceneManager.LoadScene("EscenaGameOver"); // Carga escena de Game Over
+            SceneManager.LoadScene("EscenaGameOver"); 
         }
 
-        if (vida > vidaMaxima) // Aseguramos que la vida no exceda la máxima
+        if (PerfilJugador.Vida > PerfilJugador.VidaMaxima) 
         {
-            vida = vidaMaxima; // Si la vida es mayor que la máxima, se establece a la máxima
-        }
-
-        Debug.Log(EstasVivo()); // Imprime si el jugador está vivo o no
-    }
-    private bool EstasVivo() // Método privado que verifica si el jugador está vivo
-    {
-        return vida > 0; // Retorna verdadero si la vida es mayor que cero
-    }
-    private void OnTriggerEnter2D(Collider2D collision) // Método que se llama cuando el jugador colisiona con otro objeto
-    {
-        if (!collision.gameObject.CompareTag("Meta")) // Verifica si el objeto colisionado tiene la etiqueta "Meta"
-        {
-            return; // Si no es la meta, sale del método
-        }  
-
-        Destroy(collision.gameObject); // Destruye el objeto colisionado (la meta)
-        metasRecogidas++; // Incrementa el contador de metas recogidas
-
-        if (metasRecogidas >= totalMetas) // Verifica si se han recogido todas las metas
-        {
-            SceneManager.LoadScene("EscenaYouWin"); // Carga escena de victoria
+            PerfilJugador.Vida = PerfilJugador.VidaMaxima; 
         }
     }
-
-    public void HerirJugador(float puntos, Vector2 posicion)
+    private bool EstasVivo() 
     {
-        vida -= puntos;
+        return PerfilJugador.Vida > 0; 
+    }
+    private void OnTriggerEnter2D(Collider2D collision) 
+    {
+        if (!collision.gameObject.CompareTag("Meta")) 
+        {
+            return; 
+        }
+
+        coleccionables.RecogerMeta(collision.gameObject);
+        PerfilJugador.Nivel++;
+        
+		if (miAudioSource.isPlaying) { return; }
+		miAudioSource.PlayOneShot(PerfilJugador.DiamanteSFX, PerfilJugador.VolumenDiamanteSFX);
+		
+        if(coleccionables.TodasLasMetasRecogidas())
+        {
+            SceneManager.LoadScene("EscenaYouWin"); 
+        }
+    }
+
+    public void HerirJugador(int puntos, Vector2 posicion)
+    {
+        PerfilJugador.Vida -= puntos;
         animatorJugador.SetTrigger("Golpe");
         // Perder control del Jugador
         StartCoroutine(PerderControlJugador());
@@ -83,14 +84,14 @@ public class Jugador : MonoBehaviour // Clase que representa al jugador
     private IEnumerator DesactivarColisionConEnemigos()
     {
         Physics2D.IgnoreLayerCollision(7, 9, true);
-        yield return new WaitForSeconds(TiempoNoControlJugador);
+        yield return new WaitForSeconds(PerfilJugador.InactividadPorColision);
         Physics2D.IgnoreLayerCollision(7, 9, false);
     }
 
     private IEnumerator PerderControlJugador()
     {
         movimientoJugador.sePuedemover = false;
-        yield return new WaitForSeconds(TiempoNoControlJugador);
+        yield return new WaitForSeconds(PerfilJugador.InactividadPorColision);
         movimientoJugador.sePuedemover = true;
     }
 }

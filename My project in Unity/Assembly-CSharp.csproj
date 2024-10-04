@@ -60,11 +60,18 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.44f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Enemigo\MovimientoVertical.cs" />
     <Compile Include="Assets\Scripts\Jugador\Saltar.cs" />
     <Compile Include="Assets\Scripts\Jugador\Mover.cs" />
+    <Compile Include="Assets\Scripts\Plataforma\MovimientoVerticalPlataforma.cs" />
+    <Compile Include="Assets\Scripts\Jugador\JugadorRespawn.cs" />
     <Compile Include="Assets\Scripts\Enemigo\Herir.cs" />
+    <Compile Include="Assets\Scripts\Jugador\Checkpoint.cs" />
+    <Compile Include="Assets\Scripts\Jugador\Coleccionables.cs" />
     <Compile Include="Assets\Scripts\Jugador\Jugador.cs" />
-    <Compile Include="Assets\Scripts\Enemigo\MoverEnemigo.cs" />
+    <Compile Include="Assets\Scripts\Enemigo\MovimientoHorizontal.cs" />
+    <Compile Include="Assets\Scripts\Jugador\Progresion.cs" />
+    <Compile Include="Assets\Scripts\Jugador\PerfilJugador.cs" />
     <Compile Include="Assets\Scripts\GUI\MenuGameOver.cs" />
     <Compile Include="Assets\Scripts\Spawners\GeneradorObjetoAleatorio.cs" />
     <Compile Include="Assets\Scripts\Enemigo\FuezaSalto.cs" />
