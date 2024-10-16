@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: NuevoPerfilJugador
   m_EditorClassIdentifier: 
   nivel: 0
+  nivelInicial: 0
   fuerzaSalto: 8
   velocidad: 8
   multiplicadorCaida: 0.1
   multiplicadorSaltoBajo: 0.8
   inactividadPorColision: 1
-  vida: 5
-  vidaMaxima: 5
+  vida: 3
+  vidaMaxima: 4
+  vidaInicial: 3
   jumpSFX: {fileID: 8300000, guid: 6325d58ef6940ce408ab22efce7435a7, type: 3}
   volumenSaltoSFX: 1
   diamanteSFX: {fileID: 8300000, guid: 39f34d5d36c979041bc3df7f00768dcf, type: 3}

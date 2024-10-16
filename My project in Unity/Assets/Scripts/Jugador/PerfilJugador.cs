@@ -10,6 +10,10 @@ public class PerfilJugador : ScriptableObject
 	[Range(0, 100)] private int nivel;
 	public int Nivel { get => nivel; set => nivel = value; }
 
+
+	[SerializeField]
+	[Range(0, 100)] private int nivelInicial;
+	
 	[Header("Configuraciones de movimiento")]
 	[SerializeField]
 	[Range(0, 10)] private float fuerzaSalto;
@@ -37,8 +41,17 @@ public class PerfilJugador : ScriptableObject
 	public int Vida { get => vida; set => vida = value; }
 
 	[SerializeField]
-	[Range(5, 10)] private int vidaMaxima;
+	[Range(4, 10)] private int vidaMaxima;
 	public int VidaMaxima { get => vidaMaxima; set => vidaMaxima = value; }
+
+	[SerializeField]
+	[Range(0, 5)] private int vidaInicial;
+
+	public void ReiniciarValores()
+	{
+		nivel = nivelInicial;
+		vida = vidaInicial;
+	}
 
 	[Header("Configuraciones SFX")]
 	[SerializeField]

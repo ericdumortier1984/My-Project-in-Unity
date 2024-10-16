@@ -1,16 +1,21 @@
 using System.Collections; 
 using System.Collections.Generic; 
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement; 
+
 public class Jugador : MonoBehaviour 
 {
 	[SerializeField] 
 	private PerfilJugador perfilJugador;
 	public PerfilJugador PerfilJugador { get => perfilJugador; }
 
-	// -------- Referencias a scripts ----- //
-    private MenuGameOver menuGameOver; 
-    private MenuYouWin menuYouWin;
+	// ---- Eventos del jugador ---- //
+	[SerializeField] private UnityEvent<int> OnLivesChanged;
+    [SerializeField] private UnityEvent<string> OnTextChanged;
+
+    // -------- Referencias a scripts ----- //
+    private GameManager gameManager;
     private Mover movimientoJugador;
     private Animator animatorJugador;
 	private AudioSource miAudioSource;
@@ -19,13 +24,14 @@ public class Jugador : MonoBehaviour
 
 	private void Start()
     {
-        menuGameOver = FindObjectOfType<MenuGameOver>(); 
-        menuYouWin = FindObjectOfType<MenuYouWin>();
+		gameManager = FindObjectOfType<GameManager>();
         coleccionables = FindObjectOfType<Coleccionables>();
 		movimientoJugador = GetComponent<Mover>();
         animatorJugador = GetComponent<Animator>();
 		miAudioSource = GetComponent<AudioSource>();
         progresionJugador = GetComponent<Progresion>();
+		OnLivesChanged.Invoke(PerfilJugador.Vida);
+        OnTextChanged.Invoke(PerfilJugador.Vida.ToString());
 	}
 
 	private void Update()
@@ -35,18 +41,19 @@ public class Jugador : MonoBehaviour
 
 	public void ModificarVida(int puntos) 
     {
-        PerfilJugador.Vida += puntos; 
+        PerfilJugador.Vida += puntos;
+		OnTextChanged.Invoke(PerfilJugador.Vida.ToString());
 
-        if (PerfilJugador.Vida <= 0) 
+		if (PerfilJugador.Vida <= 0) 
         {
-            SceneManager.LoadScene("EscenaGameOver"); 
+            GameEvents.TriggerDerrota();
         }
 
         if (PerfilJugador.Vida > PerfilJugador.VidaMaxima) 
         {
             PerfilJugador.Vida = PerfilJugador.VidaMaxima; 
         }
-    }
+	}
     private bool EstasVivo() 
     {
         return PerfilJugador.Vida > 0; 
@@ -66,7 +73,7 @@ public class Jugador : MonoBehaviour
 		
         if(coleccionables.TodasLasMetasRecogidas())
         {
-            SceneManager.LoadScene("EscenaYouWin"); 
+            GameEvents.TriggerVictoria();
         }
     }
 

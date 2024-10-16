@@ -61,24 +61,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Enemigo\MovimientoVertical.cs" />
+    <Compile Include="Assets\Scripts\Jugador\RotarDiamantes.cs" />
     <Compile Include="Assets\Scripts\Jugador\Saltar.cs" />
     <Compile Include="Assets\Scripts\Jugador\Mover.cs" />
     <Compile Include="Assets\Scripts\Plataforma\MovimientoVerticalPlataforma.cs" />
-    <Compile Include="Assets\Scripts\Jugador\JugadorRespawn.cs" />
     <Compile Include="Assets\Scripts\Enemigo\Herir.cs" />
-    <Compile Include="Assets\Scripts\Jugador\Checkpoint.cs" />
+    <Compile Include="Assets\Scripts\Eventos\Palanca.cs" />
     <Compile Include="Assets\Scripts\Jugador\Coleccionables.cs" />
+    <Compile Include="Assets\Scripts\GUI\Controlador UI.cs" />
     <Compile Include="Assets\Scripts\Jugador\Jugador.cs" />
     <Compile Include="Assets\Scripts\Enemigo\MovimientoHorizontal.cs" />
     <Compile Include="Assets\Scripts\Jugador\Progresion.cs" />
     <Compile Include="Assets\Scripts\Jugador\PerfilJugador.cs" />
-    <Compile Include="Assets\Scripts\GUI\MenuGameOver.cs" />
+    <Compile Include="Assets\Scripts\Eventos\GameEvents.cs" />
     <Compile Include="Assets\Scripts\Spawners\GeneradorObjetoAleatorio.cs" />
     <Compile Include="Assets\Scripts\Enemigo\FuezaSalto.cs" />
     <Compile Include="Assets\Scripts\Spawners\GeneradorDiaNoche.cs" />
     <Compile Include="Assets\Scripts\Enemigo\MoverBala.cs" />
+    <Compile Include="Assets\Scripts\GUI\ControladorHUD.cs" />
     <Compile Include="Assets\Scripts\Jugador\Curar.cs" />
-    <Compile Include="Assets\Scripts\GUI\MenuYouWin.cs" />
+    <Compile Include="Assets\Scripts\GUI\GameManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
