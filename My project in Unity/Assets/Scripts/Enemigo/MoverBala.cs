@@ -1,26 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class MoverBala : MonoBehaviour
 {
-    public float velocidad = 0f;
-    public float distancia = 0f;
+    [SerializeField][Range(0, 50)] public float velocidad = 0f;
+    private Rigidbody2D rb;
 
-    private Vector2 posicionInicial;
-    private bool derecha = true;
+	private void Awake()
+	{
+        rb = GetComponent<Rigidbody2D>();
+	}
 
-    void Start()
-    {
-        posicionInicial = transform.position;
-    }
+	private void OnEnable()
+	{
+		Mover();
+	}
 
-    void Update()
-    {
-        if (derecha)
-        {
-            transform.Translate(Vector2.right * velocidad * Time.deltaTime);
-        }
-    }
+	private void Mover()
+	{
+		Vector2 direccion = Vector2.right;
+		rb.velocity = direccion * velocidad;
+	}
 }
 

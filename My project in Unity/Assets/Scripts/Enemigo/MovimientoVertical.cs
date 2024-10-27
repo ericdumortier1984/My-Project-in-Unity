@@ -2,20 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovimientoVertical : MonoBehaviour
+public class MovimientoVertical : MoverEnemigo
 {
-	public float velocidad = 2f;
-	public float distancia = 3f;
-
-	private Vector2 posicionInicial;
-	private bool arriba = true;
-
 	void Start()
 	{
 		posicionInicial = transform.position;
 	}
-
-	void Update()
+	protected override void Mover()
 	{
 		if (arriba)
 		{

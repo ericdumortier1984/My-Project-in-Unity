@@ -2,40 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovimientoHorizontal : MonoBehaviour
+public class MovimientoHorizontal : MoverEnemigo
 {
-	
-	public float velocidad = 2f;
-	public float distancia = 3f;
+	void Start()
+	{
+		posicionInicial = transform.position;
+	}
 
-    private Vector2 posicionInicial;
-    private bool derecha = true;
+	protected override void Mover()
+	{
 
-    void Start()
-    {
-        posicionInicial = transform.position;
-    }
+		if (derecha)
+		{
+			transform.Translate(Vector2.right * velocidad * Time.deltaTime);
 
-    void Update()
-    {
-        if (derecha)
-        {
-            transform.Translate(Vector2.right * velocidad * Time.deltaTime);
+			if (transform.position.x >= posicionInicial.x + distancia)
+			{
+				derecha = false;
 
-            if (transform.position.x >= posicionInicial.x + distancia)
-            {
-                derecha = false;
+			}
+		}
+		else
+		{
+			transform.Translate(Vector2.left * velocidad * Time.deltaTime);
 
-            }
-        }
-        else
-        {
-            transform.Translate(Vector2.left * velocidad * Time.deltaTime);
-
-            if (transform.position.x <= posicionInicial.x - distancia)
-            {
-                derecha = true;
-            }
-        }
-    }
+			if (transform.position.x <= posicionInicial.x - distancia)
+			{
+				derecha = true;
+			}
+		}
+	}
+    
 }
