@@ -63,11 +63,11 @@ public class PerfilJugador : ScriptableObject
 	public float VolumenSaltoSFX { get => volumenSaltoSFX; set => volumenSaltoSFX = value; }   
 
 	[SerializeField]
-	private AudioClip diamanteSFX;
-	public AudioClip DiamanteSFX { get => diamanteSFX; set => diamanteSFX = value; }
+	private AudioClip itemSFX;
+	public AudioClip ItemSFX { get => itemSFX; set => itemSFX = value; }
 	
 	[SerializeField]
-	[Range(0, 5)] private float volumenDiamanteSFX;
-	public float VolumenDiamanteSFX { get => volumenDiamanteSFX; set => volumenDiamanteSFX = value; }
+	[Range(0, 5)] private float volumenItemSFX;
+	public float VolumenItemSFX { get => volumenItemSFX; set => volumenItemSFX = value; }
 
 }

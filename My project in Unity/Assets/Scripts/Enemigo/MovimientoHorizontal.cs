@@ -32,5 +32,13 @@ public class MovimientoHorizontal : MoverEnemigo
 			}
 		}
 	}
-    
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.CompareTag("Trampolin"))
+		{
+			Physics2D.IgnoreCollision(other, GetComponent<Collider2D>());
+		}
+	}
+
 }

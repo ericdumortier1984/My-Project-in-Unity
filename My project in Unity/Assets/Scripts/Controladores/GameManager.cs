@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
 		menuDerrota.SetActive(true);
 		Invoke("VolverAlMenuPrincipal", 5f);
 		perfilJugador.ReiniciarValores();
+		ControladorPuntaje.Instancia.RestaurarPuntaje();
 	}
 
 	private void ModoVictoria()

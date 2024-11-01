@@ -60,16 +60,13 @@ public class Jugador : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision) 
     {
-        if (!collision.gameObject.CompareTag("Meta")) 
-        {
-            return; 
-        }
+		 if (!collision.gameObject.CompareTag("Meta")) { return; }
 
         coleccionables.RecogerMeta(collision.gameObject);
         PerfilJugador.Nivel++;
         
 		if (miAudioSource.isPlaying) { return; }
-		miAudioSource.PlayOneShot(PerfilJugador.DiamanteSFX, PerfilJugador.VolumenDiamanteSFX);
+		miAudioSource.PlayOneShot(PerfilJugador.ItemSFX, PerfilJugador.VolumenItemSFX);
 		
         if(coleccionables.TodasLasMetasRecogidas())
         {

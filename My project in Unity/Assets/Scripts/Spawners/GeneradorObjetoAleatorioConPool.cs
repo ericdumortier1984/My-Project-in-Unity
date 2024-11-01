@@ -20,11 +20,6 @@ public class GeneradorObjetoAleatorioConPool : MonoBehaviour
         objetoPool = GetComponent<ObjectPool>();
 	}
 
-	void Start()
-	{
-        InvokeRepeating(nameof(GenerarObjetoAleatorio), tiempoEspera, tiempoIntervalo);
-	}
-
 	void GenerarObjetoAleatorio()
     {
         GameObject pooledObjeto = objetoPool.GetObjetoPooled();

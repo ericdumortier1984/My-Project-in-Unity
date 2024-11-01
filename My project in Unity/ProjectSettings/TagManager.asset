@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Meta
+  - monedas
+  - Trampolin
   layers:
   - Default
   - TransparentFX
@@ -16,8 +18,8 @@ TagManager:
   - Enemigos
   - Pisos
   - Jugador
-  - 
-  - 
+  - Trampolin
+  - PlataformaMovil
   - 
   - 
   - 

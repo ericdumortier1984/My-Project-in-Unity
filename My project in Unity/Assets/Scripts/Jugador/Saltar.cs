@@ -8,6 +8,8 @@ public class Saltar : MonoBehaviour
     // Variables a configurar desde el editor
     [Header("Configuracion")]
     [SerializeField] private ParticleSystem polvo;
+    [SerializeField] float rayDistancia;
+    [SerializeField] LayerMask capaPiso;
 
     // Variables privadas
     private bool puedoSaltar = true;
@@ -32,12 +34,13 @@ public class Saltar : MonoBehaviour
     // Codigo ejecutado en cada frame del juego (Intervalo variable)
     void Update()
     {
+        puedoSaltar = EsPiso();
+
         if (Input.GetKeyDown(KeyCode.Space) && puedoSaltar)
         {
-            puedoSaltar = false;
+            saltando = true;
             polvo.Play();
            
-
 			if (miAudioSource.isPlaying) { return; }
 			miAudioSource.PlayOneShot(jugador.PerfilJugador.JumpSFX, jugador.PerfilJugador.VolumenSaltoSFX);
 		}
@@ -45,10 +48,10 @@ public class Saltar : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!puedoSaltar && !saltando)
+        if (saltando)
         {
-            miRigidbody2D.AddForce(Vector2.up * jugador.PerfilJugador.FuerzaSalto, ForceMode2D.Impulse);
-            saltando = true;
+			miRigidbody2D.AddForce(Vector2.up * jugador.PerfilJugador.FuerzaSalto, ForceMode2D.Impulse);
+            saltando = false;
         }
 
         if (mejorarSalto) // Opcionalmente desde el editor podemos elejir entre salto normal o mejorado
@@ -68,8 +71,18 @@ public class Saltar : MonoBehaviour
     // Codigo ejecutado cuando el jugador colisiona con otro objeto
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        puedoSaltar = true;
         saltando = false;
     }
 
+    private bool EsPiso()
+    {
+        RaycastHit2D raycasthit2D = Physics2D.Raycast(transform.position, Vector2.down, rayDistancia, capaPiso);
+        return raycasthit2D.collider != null;
+    }
+
+	private void OnDrawGizmos()
+	{
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, Vector2.down * rayDistancia);
+	}
 }

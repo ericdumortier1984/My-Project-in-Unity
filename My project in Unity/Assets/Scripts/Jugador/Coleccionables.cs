@@ -15,13 +15,13 @@ public class Coleccionables : MonoBehaviour
 
 		}
 	}
-	
-	public void RecogerMeta(GameObject meta)
+
+	public void RecogerMeta(GameObject metaAlcanzada)
 	{
-		if (metas.Contains(meta))
+		if (metas.Contains(metaAlcanzada))
 		{
-			metas.Remove(meta);
-			Destroy(meta);
+			metas.Remove(metaAlcanzada);
+			Destroy(metaAlcanzada);
 		}
 	}
 

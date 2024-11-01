@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cf9e03d6bddf34240a4e474e2667a336
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - perfilJugador: {fileID: 11400000, guid: ac9f358743fdd4240b21babfe068f025, type: 2}
+  - menuPausa: {instanceID: 0}
+  - menuVictoria: {instanceID: 0}
+  - menuDerrota: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

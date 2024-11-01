@@ -1,56 +1,48 @@
-using System.Collections; // Importa el espacio de nombres para colecciones (no utilizado en este script).
-using System.Collections.Generic; // Importa el espacio de nombres para colecciones genéricas (no utilizado en este script).
-using UnityEngine; // Importa el espacio de nombres de Unity para acceder a sus funciones y clases.
+using System.Collections; 
+using System.Collections.Generic; 
+using UnityEngine;
 
-public class Mover : MonoBehaviour // Define una clase llamada Mover que hereda de MonoBehaviour.
+public class Mover : MonoBehaviour 
 {
-    
-    [SerializeField] private Vector2 velocidadRebotePorDaño; // Velocidad de rebote al recibir daño, editable desde el inspector.
+    [SerializeField] private Vector2 velocidadRebotePorDaño; 
 
-	// Variables de uso interno en el script
-	private float moverHorizontal; // Almacena la entrada horizontal del jugador.
-    private Vector2 direccion; // Almacena la dirección de movimiento.
-
-    // Variable para referenciar otro componente del objeto
-    private Rigidbody2D miRigidbody2D; // Referencia al componente Rigidbody2D del objeto.
-    private Animator miAnimator; // Referencia al componente Animator del objeto.
-    private SpriteRenderer miSprite; // Referencia al componente SpriteRenderer del objeto.
-    private CircleCollider2D miCollider2D; // Referencia al componente CircleCollider2D del objeto.
-    private Jugador jugador; // Referencia al Script Jugador
-
+	private float moverHorizontal; 
+    private Vector2 direccion; 
+    private Rigidbody2D miRigidbody2D; 
+    private Animator miAnimator; 
+    private SpriteRenderer miSprite;
+    private CircleCollider2D miCollider2D; 
+    private Jugador jugador; 
 	private int saltarMask; // Máscara de capas para detectar colisiones con plataformas.
 
-    public bool sePuedemover; // Bandera que indica si el objeto puede moverse.
+    public bool sePuedemover = false;
 
-    // Codigo ejecutado cuando el objeto se activa en el nivel
-    private void OnEnable() // Método que se llama cuando el objeto se activa.
+    private void OnEnable() 
     {
-        // Inicializa las referencias a los componentes.
-        miRigidbody2D = GetComponent<Rigidbody2D>(); // Obtiene el componente Rigidbody2D.
-        miAnimator = GetComponent<Animator>(); // Obtiene el componente Animator.
-        miSprite = GetComponent<SpriteRenderer>(); // Obtiene el componente SpriteRenderer.
-        miCollider2D = GetComponent<CircleCollider2D>(); // Obtiene el componente CircleCollider2D.
-		jugador = GetComponent<Jugador>();
-		saltarMask = LayerMask.GetMask("Pisos", "Plataformas"); // Crea una máscara de capas para detectar "Pisos" y "Plataformas".
+		miRigidbody2D = GetComponent<Rigidbody2D>(); 
+        miAnimator = GetComponent<Animator>(); 
+        miSprite = GetComponent<SpriteRenderer>(); 
+        miCollider2D = GetComponent<CircleCollider2D>(); 
+        jugador = GetComponent<Jugador>();
+        saltarMask = LayerMask.GetMask("Pisos", "Plataformas"); // Crea una máscara de capas para detectar "Pisos" y "Plataformas".
     }
 
-    // Codigo ejecutado en cada frame del juego (Intervalo variable)
-    private void Update() // Método que se llama una vez por frame.
+	private void Update()
     {
-        moverHorizontal = Input.GetAxis("Horizontal"); // Obtiene la entrada horizontal del jugador (-1 a 1).
-        direccion = new Vector2(moverHorizontal, 0f); // Crea un vector de dirección basado en la entrada horizontal.
+        moverHorizontal = Input.GetAxis("Horizontal"); 
+        direccion = new Vector2(moverHorizontal, 0f); 
 
-        int velocidadX = (int)miRigidbody2D.velocity.x; // Obtiene la velocidad horizontal actual del Rigidbody2D.
-        miSprite.flipX = velocidadX > 0; // Voltea el sprite si se mueve a la derecha.
-        miAnimator.SetInteger("Velocidad", velocidadX); // Establece el parámetro "Velocidad" del Animator.
-        miAnimator.SetBool("EnAire", !EnContactoConPlataforma()); // Cambia el estado "EnAire" dependiendo de si está en contacto con una plataforma.
+        int velocidadX = (int)miRigidbody2D.velocity.x; 
+        miSprite.flipX = velocidadX > 0; 
+        miAnimator.SetInteger("Velocidad", velocidadX); 
+        miAnimator.SetBool("EnAire", !EnContactoConPlataforma()); 
     }
 
-    private void FixedUpdate() // Método que se llama en intervalos fijos, adecuado para físicas.
+    private void FixedUpdate() 
     {
-        if (sePuedemover) // Verifica si el objeto puede moverse.
+        if (sePuedemover)
         {
-            miRigidbody2D.AddForce(direccion * jugador.PerfilJugador.Velocidad); // Aplica una fuerza al Rigidbody2D en la dirección deseada.
+            miRigidbody2D.AddForce(direccion * jugador.PerfilJugador.Velocidad); 
         }
     }
     private bool EnContactoConPlataforma() // Método que verifica si el objeto está en contacto con plataformas.
