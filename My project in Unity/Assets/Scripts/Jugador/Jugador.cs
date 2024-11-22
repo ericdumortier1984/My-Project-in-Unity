@@ -63,10 +63,11 @@ public class Jugador : MonoBehaviour
 		 if (!collision.gameObject.CompareTag("Meta")) { return; }
 
         coleccionables.RecogerMeta(collision.gameObject);
+    
         PerfilJugador.Nivel++;
         
 		if (miAudioSource.isPlaying) { return; }
-		miAudioSource.PlayOneShot(PerfilJugador.ItemSFX, PerfilJugador.VolumenItemSFX);
+		miAudioSource.PlayOneShot(PerfilJugador.DiamanteSFX, PerfilJugador.VolumenDiamanteSFX);
 		
         if(coleccionables.TodasLasMetasRecogidas())
         {
@@ -83,6 +84,9 @@ public class Jugador : MonoBehaviour
         // Desactivar colision
         StartCoroutine(DesactivarColisionConEnemigos());
         movimientoJugador.RebotePorDaño(posicion);
+
+        if (miAudioSource.isPlaying) { return; }
+        miAudioSource.PlayOneShot(PerfilJugador.GolpeEnemigoSFX, PerfilJugador.VolumenGolpeEnemigoSFX);
     }
 
     private IEnumerator DesactivarColisionConEnemigos()

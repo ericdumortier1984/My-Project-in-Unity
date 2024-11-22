@@ -6,6 +6,8 @@ public class Coleccionables : MonoBehaviour
 {
 	public List<GameObject> metas = new List<GameObject>();
 
+	[SerializeField] private ParticleSystem particulaRecoleccionDiamantes;
+
 	private void Start()
 	{
 		metas.AddRange(GameObject.FindGameObjectsWithTag("Meta"));
@@ -22,6 +24,8 @@ public class Coleccionables : MonoBehaviour
 		{
 			metas.Remove(metaAlcanzada);
 			Destroy(metaAlcanzada);
+			particulaRecoleccionDiamantes.transform.position = metaAlcanzada.transform.position;
+			particulaRecoleccionDiamantes.Play();
 		}
 	}
 

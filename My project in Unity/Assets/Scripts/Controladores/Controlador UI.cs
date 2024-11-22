@@ -10,4 +10,14 @@ public class ControladorUI : MonoBehaviour
 		int indiceEscenaActual = SceneManager.GetActiveScene().buildIndex;
 		SceneManager.LoadScene(indiceEscenaActual + 1);
 	}
+
+	public void SalirJuego()
+	{
+		SalirAplicación();
+	}
+
+	private static void SalirAplicación()
+	{
+		Application.Quit();
+	}
 }

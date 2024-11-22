@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public static class GameEvents
+public static class GameEvents // Eventos Globales
 {
     public static event Action OnPausa;
     public static event Action OnResumen;

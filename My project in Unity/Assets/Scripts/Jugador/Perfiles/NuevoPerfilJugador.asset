@@ -15,7 +15,7 @@ MonoBehaviour:
   nivel: 0
   nivelInicial: 0
   fuerzaSalto: 9
-  velocidad: 8
+  velocidad: 7
   multiplicadorCaida: 0.1
   multiplicadorSaltoBajo: 0.5
   inactividadPorColision: 1
@@ -26,3 +26,7 @@ MonoBehaviour:
   volumenSaltoSFX: 1
   itemSFX: {fileID: 8300000, guid: 39f34d5d36c979041bc3df7f00768dcf, type: 3}
   volumenItemSFX: 5
+  diamanteSFX: {fileID: 8300000, guid: b779d32529a066048884a978ddc7e3ee, type: 3}
+  volumenDiamanteSFX: 5
+  golpeEnemigoSFX: {fileID: 8300000, guid: d2f8d1689eb239e4b92c9b2ff0a04d2c, type: 3}
+  volumenGolpeEnemigoSFX: 5

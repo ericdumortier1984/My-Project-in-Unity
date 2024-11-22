@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class ControladorPuntaje : MonoBehaviour
 {
-    public static ControladorPuntaje Instancia { get; private set; }
+	public static ControladorPuntaje Instancia { get; private set; }
+
 	private ControladorHUDPuntaje controladorHUDPuntaje;
-	//private ControladorHUD controladorHUD;
+	[SerializeField] private int puntaje;
+	[SerializeField] private int puntajeMaximo;
 	[SerializeField] private UnityEvent<string> OnTextChanged;
-	private int puntaje;
+	[SerializeField] private UnityEvent<string> OnTextmAXChanged;
 
 	private void Awake()
 	{
@@ -19,8 +21,13 @@ public class ControladorPuntaje : MonoBehaviour
 			Instancia = this;
 			DontDestroyOnLoad(gameObject); //Para conservar entre escenas
 			puntaje = 0;
+
+			// Borrar PlayerPrefs si es la primera vez que se ejecuta el build
+			PrimerCarga();
+
+			CargarProgresion(); //Carga el puntaje guardado
 		}
-		else 
+		else
 		{
 			Destroy(gameObject); //Ya se creó, entonces se destruye
 		}
@@ -29,6 +36,7 @@ public class ControladorPuntaje : MonoBehaviour
 	private void Start()
 	{
 		controladorHUDPuntaje = FindObjectOfType<ControladorHUDPuntaje>();
+		puntajeMaximo = PlayerPrefs.GetInt("PuntajeMaximo");
 		ActualizarHUD();
 	}
 
@@ -37,19 +45,12 @@ public class ControladorPuntaje : MonoBehaviour
 		puntaje += puntos;
 		ActualizarHUD();
 
-		/*if (puntaje == 50)
+		if (puntaje > puntajeMaximo)
 		{
-			controladorHUD.MostrarMensajeTemporal("¡¡NICE!!");
+			puntajeMaximo = puntaje;
+			PlayerPrefs.SetInt("PuntajeMaximo", puntajeMaximo);
+			PlayerPrefs.Save();
 		}
-		else if (puntaje == 100)
-		{
-			controladorHUD.MostrarMensajeTemporal("¡¡GREAT!!");
-		}
-		else if (puntaje == 150)
-		{
-			controladorHUD.MostrarMensajeTemporal("¡¡EXCELENT!!");
-		}*/
-
 	}
 
 	public void RestaurarPuntaje()
@@ -63,12 +64,45 @@ public class ControladorPuntaje : MonoBehaviour
 		return puntaje;
 	}
 
+	public int GetPuntajeMaximo()
+	{
+		return puntajeMaximo;
+	}
+
 	private void ActualizarHUD()
 	{
 		if (controladorHUDPuntaje != null)
 		{
 			controladorHUDPuntaje.ActualizarTextoPuntaje(ControladorPuntaje.Instancia.GetPuntaje().ToString());
 			OnTextChanged.Invoke(ControladorPuntaje.Instancia.GetPuntaje().ToString());
+
+			controladorHUDPuntaje.ActualizarTextoPuntajeMaximo(ControladorPuntaje.Instancia.GetPuntajeMaximo().ToString());
+			OnTextmAXChanged.Invoke(ControladorPuntaje.Instancia.GetPuntajeMaximo().ToString());
+		}
+	}
+
+	private void OnApplicationQuit()
+	{
+		GuardarProgresion(); // Guarda el puntaje al salir de la aplicación
+	}
+	private void GuardarProgresion()
+	{
+		PlayerPrefs.SetInt("Puntaje", puntaje);
+		PlayerPrefs.SetInt("PuntajeMaximo", puntajeMaximo);
+		PlayerPrefs.Save();
+	}
+	private void CargarProgresion()
+	{
+		puntajeMaximo = PlayerPrefs.GetInt("PuntajeMaximo", 0);
+	}
+
+	private void PrimerCarga()
+	{
+		if (PlayerPrefs.GetInt("PrimerCarga", 1) == 1)
+		{
+			PlayerPrefs.DeleteAll();
+			PlayerPrefs.SetInt("PrimerCarga", 0);
+			PlayerPrefs.Save();
 		}
 	}
 }

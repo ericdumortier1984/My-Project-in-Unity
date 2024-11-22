@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class RecolectarMonedas : MonoBehaviour
 {
-	[SerializeField]
-	private PerfilJugador perfilJugador;
+	[SerializeField] private PerfilJugador perfilJugador;
+	[SerializeField] private ParticleSystem particulaRecoleccionMoneda;
 	public PerfilJugador PerfilJugador { get => perfilJugador; }
-
 	public List<GameObject> monedas = new List<GameObject>();
-
-	bool monedasRecolectadas = false;
-
 	private Jugador jugador;
 	private AudioSource miAudioSource;
+	bool monedasRecolectadas = false;
 
 
 	private void Start()
@@ -43,10 +40,12 @@ public class RecolectarMonedas : MonoBehaviour
 	{
 		if (monedas.Contains(monedaRecogida))
 		{
-			monedas.Remove(monedaRecogida);
-			monedaRecogida.SetActive(false); 
+			monedaRecogida.SetActive(false);
+			// Reproduce el sistema de partículas en la posición de la moneda recogida
+			particulaRecoleccionMoneda.transform.position = monedaRecogida.transform.position;
+			particulaRecoleccionMoneda.Play();
 			miAudioSource.PlayOneShot(PerfilJugador.ItemSFX, PerfilJugador.VolumenItemSFX);
-			ControladorPuntaje.Instancia.SumarPuntaje(10);
+			ControladorPuntaje.Instancia.SumarPuntaje(50);
 
 		}
 	}

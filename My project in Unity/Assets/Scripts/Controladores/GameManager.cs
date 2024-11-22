@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
 	{
 		Time.timeScale = 1f;
 		menuDerrota.SetActive(true);
-		Invoke("VolverAlMenuPrincipal", 5f);
+		Invoke("VolverAlMenuPrincipal", 1f);
 		perfilJugador.ReiniciarValores();
 		ControladorPuntaje.Instancia.RestaurarPuntaje();
 	}
@@ -77,8 +77,9 @@ public class GameManager : MonoBehaviour
 	{
 		Time.timeScale = 1f;
 		menuVictoria.SetActive(true);
-		Invoke("VolverAlMenuPrincipal", 5f);
+		Invoke("VolverAlMenuPrincipal", 1f);
 		perfilJugador.ReiniciarValores();
+		ControladorPuntaje.Instancia.RestaurarPuntaje();
 	}
 
 	private void VolverAlMenuPrincipal()
